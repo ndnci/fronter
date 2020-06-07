@@ -1,6 +1,6 @@
 {
   "name": "@ndnci/fronter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Front-end project template generator",
   "main": "index.js",
   "scripts": {
