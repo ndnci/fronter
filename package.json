@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "fronter": "./index.js"
+    "fronter": "index.js"
   },
   "keywords": [
     "front",
@@ -17,5 +17,14 @@
   "license": "MIT",
   "dependencies": {
     "inquirer": "^7.1.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ndnci/fronter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ndnci/fronter/issues"
+  },
+  "homepage": "https://github.com/ndnci/fronter#readme"
 }
