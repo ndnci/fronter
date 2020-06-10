@@ -1,0 +1,17 @@
+body {
+    background-color: red;
+
+    div {
+        display: inline-block;
+
+        .another-div {
+            text-align: center;
+
+            // comment
+            #someid {
+                color: blue;
+                /* another comment */
+            }
+        }
+    }
+}
