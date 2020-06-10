@@ -1,5 +1,6 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass');
+const typescript = require('gulp-typescript');
 const concat = require('gulp-concat');
 const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('gulp-autoprefixer');
@@ -25,6 +26,15 @@ const options = {
         src: './assets/js/**/*.js',
         concat: 'index.js',
         dest: './dist/js'
+    },
+    // TYPESCRIPT
+    typescript: {
+        src: './assets/ts/**/*.ts',
+        concat: 'index.js',
+        dest: './dist/ts',
+        options: {
+        // typescript options here
+        }
     },
     // AUTOPREFIXER
     autoprefixer: {
@@ -104,6 +114,28 @@ function _js(done) {
         done();
 };
 
+// typescript files compiler
+function _ts(done) {
+    // 1. where is js files
+    gulp.src(options.typescript.src)
+    // 2 init sourcemaps
+        .pipe(sourcemaps.init())
+    // 2.1 pass that file through typescript compiler
+        .pipe(typescript(options.typescript.options))
+    // 2.1.1 pass that file through babel compiler
+        .pipe(babel(options.babel))
+    // 2.2 concat files with custom name
+        .pipe(concat(options.typescript.concat))
+    // 2.3 write sourcemaps file
+        .pipe(sourcemaps.write())
+    // 3. where do i save the compiled JS ?
+        .pipe(gulp.dest(options.typescript.dest))
+    // 4. stream changes to all browser
+        .pipe(browserSync.stream())
+
+        done();
+};
+
 // gulp watcher
 function _watch(done) {
 
@@ -129,5 +161,5 @@ function _watch(done) {
 };
 
 // default gulp function for using only "gulp" on terminal
-exports.default = gulp.series(_css, _scss, _js);
+exports.default = gulp.series(_css, _scss, _js, _ts);
 exports.watch = _watch;

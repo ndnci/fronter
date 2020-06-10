@@ -1,4 +1,4 @@
-class Test {
+class Test{
 
     hello() {
         return "Hello World";
