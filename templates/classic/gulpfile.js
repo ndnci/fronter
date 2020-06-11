@@ -8,6 +8,7 @@ const babel = require('gulp-babel');
 const browserSync = require('browser-sync').create();
 const uglify = require('gulp-uglify');
 const cleanCSS = require('gulp-clean-css');
+const rev = require('gulp-rev');
 
 // OPTIONS
 const options = {
@@ -68,6 +69,8 @@ function _css(done) {
         .pipe(cleanCSS())
     // 2.3 write sourcemaps file
         .pipe(sourcemaps.write())
+    // 2.4 add random hash to filename
+        .pipe(rev())
     // 3. where do i save the compiled CSS ?
         .pipe(gulp.dest(options.css.dest))
     // 4. stream changes to all browser
@@ -92,6 +95,8 @@ function _scss(done) {
         .pipe(cleanCSS())
     // 2.3 write sourcemaps file
         .pipe(sourcemaps.write())
+    // 2.4 add random hash to filename
+        .pipe(rev())
     // 3. where do i save the compiled CSS ?
         .pipe(gulp.dest(options.sass.dest))
     // 4. stream changes to all browser
@@ -114,6 +119,8 @@ function _js(done) {
         .pipe(uglify())
     // 2.3 write sourcemaps file
         .pipe(sourcemaps.write())
+    // 2.4 add random hash to filename
+        .pipe(rev())
     // 3. where do i save the compiled JS ?
         .pipe(gulp.dest(options.javascript.dest))
     // 4. stream changes to all browser
@@ -138,6 +145,8 @@ function _ts(done) {
         .pipe(uglify())
     // 2.3 write sourcemaps file
         .pipe(sourcemaps.write())
+    // 2.4 add random hash to filename
+        .pipe(rev())
     // 3. where do i save the compiled JS ?
         .pipe(gulp.dest(options.typescript.dest))
     // 4. stream changes to all browser
