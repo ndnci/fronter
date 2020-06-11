@@ -7,6 +7,7 @@ const autoprefixer = require('gulp-autoprefixer');
 const babel = require('gulp-babel');
 const browserSync = require('browser-sync').create();
 const uglify = require('gulp-uglify');
+const cleanCSS = require('gulp-clean-css');
 
 // OPTIONS
 const options = {
@@ -63,6 +64,8 @@ function _css(done) {
         .pipe(autoprefixer(options.autoprefixer))
     // 2.2 concat files with custom name
         .pipe(concat(options.css.concat))
+    // 2.2.1 minify
+        .pipe(cleanCSS())
     // 2.3 write sourcemaps file
         .pipe(sourcemaps.write())
     // 3. where do i save the compiled CSS ?
@@ -85,6 +88,8 @@ function _scss(done) {
         .pipe(autoprefixer(options.autoprefixer))
     // 2.2 concat files with custom name
         .pipe(concat(options.sass.concat))
+    // 2.2.1 minify
+        .pipe(cleanCSS())
     // 2.3 write sourcemaps file
         .pipe(sourcemaps.write())
     // 3. where do i save the compiled CSS ?
