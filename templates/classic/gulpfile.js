@@ -6,6 +6,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('gulp-autoprefixer');
 const babel = require('gulp-babel');
 const browserSync = require('browser-sync').create();
+const uglify = require('gulp-uglify');
 
 // OPTIONS
 const options = {
@@ -13,25 +14,25 @@ const options = {
     css: {
         src: './assets/css/**/*.css',
         concat: 'index.css',
-        dest: './dist/css'
+        dest: './build/css'
     },
     // SASS
     sass: {
         src: './assets/scss/**/*.scss',
         concat: 'index.css',
-        dest: './dist/scss'
+        dest: './build/scss'
     },
     // JAVASCRIPT
     javascript: {
         src: './assets/js/**/*.js',
         concat: 'index.js',
-        dest: './dist/js'
+        dest: './build/js'
     },
     // TYPESCRIPT
     typescript: {
         src: './assets/ts/**/*.ts',
         concat: 'index.js',
-        dest: './dist/ts',
+        dest: './build/ts',
         options: {
         // typescript options here
         }
@@ -104,6 +105,8 @@ function _js(done) {
         .pipe(babel(options.babel))
     // 2.2 concat files with custom name
         .pipe(concat(options.javascript.concat))
+    // 2.2.1 minify
+        .pipe(uglify())
     // 2.3 write sourcemaps file
         .pipe(sourcemaps.write())
     // 3. where do i save the compiled JS ?
@@ -126,6 +129,8 @@ function _ts(done) {
         .pipe(babel(options.babel))
     // 2.2 concat files with custom name
         .pipe(concat(options.typescript.concat))
+    // 2.2.1 minify
+        .pipe(uglify())
     // 2.3 write sourcemaps file
         .pipe(sourcemaps.write())
     // 3. where do i save the compiled JS ?
