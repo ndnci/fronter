@@ -9,32 +9,39 @@ const browserSync = require('browser-sync').create();
 const uglify = require('gulp-uglify');
 const cleanCSS = require('gulp-clean-css');
 const rev = require('gulp-rev');
+const del = require('del');
+
+// SETTINGS
+const settings = {
+    devPath: './assets',
+    buildPath: './build'
+};
 
 // OPTIONS
 const options = {
     // CSS
     css: {
-        src: './assets/css/**/*.css',
+        src: settings.devPath + '/css/**/*.css',
         concat: 'index.css',
-        dest: './build/css'
+        dest: settings.buildPath + '/css'
     },
     // SASS
     sass: {
-        src: './assets/scss/**/*.scss',
+        src: settings.devPath + '/scss/**/*.scss',
         concat: 'index.css',
-        dest: './build/scss'
+        dest: settings.buildPath + '/scss'
     },
     // JAVASCRIPT
     javascript: {
-        src: './assets/js/**/*.js',
+        src: settings.devPath + '/js/**/*.js',
         concat: 'index.js',
-        dest: './build/js'
+        dest: settings.buildPath + '/js'
     },
     // TYPESCRIPT
     typescript: {
-        src: './assets/ts/**/*.ts',
+        src: settings.devPath + '/ts/**/*.ts',
         concat: 'index.js',
-        dest: './build/ts',
+        dest: settings.buildPath + '/ts',
         options: {
         // typescript options here
         }
@@ -155,6 +162,14 @@ function _ts(done) {
         done();
 };
 
+// delete all old hashed files
+function _clearOldFiles(done) {
+    // we need to delete all sub build folders
+    // and keep build folder, if not we have an error
+    del([`${settings.buildPath}/**`, `!${settings.buildPath}`]);
+    done();
+}
+
 // gulp watcher
 function _watch(done) {
 
@@ -180,5 +195,6 @@ function _watch(done) {
 };
 
 // default gulp function for using only "gulp" on terminal
-exports.default = gulp.series(_css, _scss, _js, _ts);
+exports.default = gulp.series(_clearOldFiles, _css, _scss, _js, _ts);
 exports.watch = _watch;
+exports.clear = _clearOldFiles;
