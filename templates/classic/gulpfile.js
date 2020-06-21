@@ -13,35 +13,35 @@ const del = require('del');
 
 // SETTINGS
 const settings = {
-    devPath: './assets',
-    buildPath: './build'
+    pathDev: './assets',
+    pathBuild: './build'
 };
 
 // OPTIONS
 const options = {
     // CSS
     css: {
-        src: settings.devPath + '/css/**/*.css',
+        src: settings.pathDev + '/css/**/*.css',
         concat: 'index.css',
-        dest: settings.buildPath + '/css'
+        dest: settings.pathBuild + '/css'
     },
     // SASS
     sass: {
-        src: settings.devPath + '/scss/**/*.scss',
+        src: settings.pathDev + '/scss/**/*.scss',
         concat: 'index.css',
-        dest: settings.buildPath + '/scss'
+        dest: settings.pathBuild + '/scss'
     },
     // JAVASCRIPT
     javascript: {
-        src: settings.devPath + '/js/**/*.js',
+        src: settings.pathDev + '/js/**/*.js',
         concat: 'index.js',
-        dest: settings.buildPath + '/js'
+        dest: settings.pathBuild + '/js'
     },
     // TYPESCRIPT
     typescript: {
-        src: settings.devPath + '/ts/**/*.ts',
+        src: settings.pathDev + '/ts/**/*.ts',
         concat: 'index.js',
-        dest: settings.buildPath + '/ts',
+        dest: settings.pathBuild + '/ts',
         options: {
         // typescript options here
         }
@@ -162,11 +162,11 @@ function _ts(done) {
         done();
 };
 
-// delete all old hashed files
-function _clearOldFiles(done) {
+// delete all build files
+function _clearBuildFiles(done) {
     // we need to delete all sub build folders
     // and keep build folder, if not we have an error
-    del([`${settings.buildPath}/**`, `!${settings.buildPath}`]);
+    del([`${settings.pathBuild}/**`, `!${settings.pathBuild}`]);
     done();
 }
 
@@ -195,6 +195,6 @@ function _watch(done) {
 };
 
 // default gulp function for using only "gulp" on terminal
-exports.default = gulp.series(_clearOldFiles, _css, _scss, _js, _ts);
+exports.default = gulp.series(_clearBuildFiles, _css, _scss, _js, _ts);
 exports.watch = _watch;
-exports.clear = _clearOldFiles;
+exports.clear = _clearBuildFiles;
