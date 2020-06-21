@@ -11,230 +11,137 @@ const cleanCSS = require('gulp-clean-css');
 const rev = require('gulp-rev');
 const del = require('del');
 
-// SETTINGS
-const settings = {
-    pathDev: './assets',
-    pathBuild: './build'
-};
-
-// OPTIONS
-const options = {
-    // CSS
-    css: {
-        active: true,
-        src: settings.pathDev + '/css/**/*.css',
-        concat: 'index.css',
-        dest: settings.pathBuild + '/css'
-    },
-    // SASS
-    sass: {
-        active: true,
-        src: settings.pathDev + '/scss/**/*.scss',
-        concat: 'index.css',
-        dest: settings.pathBuild + '/scss'
-    },
-    // JAVASCRIPT
-    javascript: {
-        active: true,
-        src: settings.pathDev + '/js/**/*.js',
-        concat: 'index.js',
-        dest: settings.pathBuild + '/js'
-    },
-    // TYPESCRIPT
-    typescript: {
-        active: true,
-        src: settings.pathDev + '/ts/**/*.ts',
-        concat: 'index.js',
-        dest: settings.pathBuild + '/ts',
-        options: {
-        // typescript options here
-        }
-    },
-    // AUTOPREFIXER
-    autoprefixer: {
-        active: true,
-        overrideBrowserslist: ['last 10 versions']
-    },
-    // BABEL
-    babel: {
-        active: true,
-        presets: ['@babel/env']
-    },
-    // BROWSER SYNC
-    browserSync: {
-        active: false,
-        baseDir: './',
-        watch: './**/*.html'
-    },
-    // OTHER PLUGINS
-    sourceMaps: {
-        active: true,
-    },
-    cleanCSS: {
-        active: true,
-    },
-    uglify: {
-        active: true,
-    },
-    concat: {
-        active: true,
-    },
-    rev: {
-        active: true,
-    },
-    del: {
-        active: true,
-    },
-};
+// Config
+const { gulpOptions, gulpSettings } = require('./fronter');
 
 // css files compiler
 function _css(done) {
-
-    if(options.css.active) {
     // 1. where is css files
-        const gulpCss = gulp.src(options.css.src);
+        gulp.src(gulpOptions.css.src)
     // 2 init sourcemaps
-        if(options.sourceMaps.active)   gulpCss.pipe(sourcemaps.init());
+        .pipe(sourcemaps.init())
     // 2.1.1 autoprefixer filter
-        if(options.autoprefixer.active)   gulpCss.pipe(autoprefixer(options.autoprefixer));
+        .pipe(autoprefixer(gulpOptions.autoprefixer))
     // 2.2 concat files with custom name
-        if(options.concat.active)   gulpCss.pipe(concat(options.css.concat));
+        .pipe(concat(gulpOptions.css.concat))
     // 2.2.1 minify
-        if(options.cleanCSS.active)   gulpCss.pipe(cleanCSS());
+        .pipe(cleanCSS())
     // 2.3 write sourcemaps file
-        if(options.sourceMaps.active)   gulpCss.pipe(sourcemaps.write());
+        .pipe(sourcemaps.write())
     // 2.4 add random hash to filename
-        if(options.rev.active)   gulpCss.pipe(rev());
+        .pipe(rev())
     // 3. where do i save the compiled CSS ?
-        gulpCss.pipe(gulp.dest(options.css.dest));
+        .pipe(gulp.dest(gulpOptions.css.dest))
     // 4. stream changes to all browser
-        if(options.browserSync.active)   gulpCss.pipe(browserSync.stream());
-    }
+        .pipe(browserSync.stream())
 
         done();
 };
 
 // sass files compiler
 function _scss(done) {
-
-    if(options.sass.active) {
     // 1. where is scss files
-        const gulpScss = gulp.src(options.sass.src);
+        gulp.src(gulpOptions.sass.src)
     // 2 init sourcemaps
-        if(options.sourceMaps.active)   gulpScss.pipe(sourcemaps.init());
+        .pipe(sourcemaps.init())
     // 2.1 pass that file through sass compiler
-        gulpScss.pipe(sass());
+        .pipe(sass())
     // 2.1.1 autoprefixer filter
-        if(options.autoprefixer.active)    gulpScss.pipe(autoprefixer(options.autoprefixer));
+        .pipe(autoprefixer(gulpOptions.autoprefixer))
     // 2.2 concat files with custom name
-        if(options.concat.active)   gulpScss.pipe(concat(options.sass.concat));
+        .pipe(concat(gulpOptions.sass.concat))
     // 2.2.1 minify
-        if(options.cleanCSS.active)    gulpScss.pipe(cleanCSS());
+        .pipe(cleanCSS())
     // 2.3 write sourcemaps file
-        if(options.sourceMaps.active)   gulpScss.pipe(sourcemaps.write());
+        .pipe(sourcemaps.write())
     // 2.4 add random hash to filename
-        if(options.rev.active)    gulpScss.pipe(rev());
+        .pipe(rev())
     // 3. where do i save the compiled CSS ?
-        gulpScss.pipe(gulp.dest(options.sass.dest));
+        .pipe(gulp.dest(gulpOptions.sass.dest))
     // 4. stream changes to all browser
-        if(options.browserSync.active)    gulpScss.pipe(browserSync.stream());
-    }
+        .pipe(browserSync.stream())
 
         done();
 };
 
 // javascript files compiler
 function _js(done) {
-
-    if(options.javascript.active) {
     // 1. where is js files
-        const gulpJs = gulp.src(options.javascript.src);
+    gulp.src(gulpOptions.javascript.src)
     // 2 init sourcemaps
-        if(options.sourceMaps.active)   gulpJs.pipe(sourcemaps.init());
+        .pipe(sourcemaps.init())
     // 2.1 pass that file through babel compiler
-        if(options.babel.active)   gulpJs.pipe(babel(options.babel));
+        .pipe(babel(gulpOptions.babel))
     // 2.2 concat files with custom name
-        if(options.concat.active)   gulpJs.pipe(concat(options.javascript.concat));
+        .pipe(concat(gulpOptions.javascript.concat))
     // 2.2.1 minify
-        if(options.uglify.active)   gulpJs.pipe(uglify());
+        .pipe(uglify())
     // 2.3 write sourcemaps file
-        if(options.sourceMaps.active)   gulpJs.pipe(sourcemaps.write());
+        .pipe(sourcemaps.write())
     // 2.4 add random hash to filename
-        if(options.rev.active)    gulpJs.pipe(rev());
+        .pipe(rev())
     // 3. where do i save the compiled JS ?
-        gulpJs.pipe(gulp.dest(options.javascript.dest));
+        .pipe(gulp.dest(gulpOptions.javascript.dest))
     // 4. stream changes to all browser
-        if(options.browserSync.active)    gulpJs.pipe(browserSync.stream());
-    }
+        .pipe(browserSync.stream())
 
         done();
 };
 
 // typescript files compiler
 function _ts(done) {
-
-    if(options.typescript.active) {
     // 1. where is js files
-        const gulpTs = gulp.src(options.typescript.src);
+    gulp.src(gulpOptions.typescript.src)
     // 2 init sourcemaps
-        if(options.sourceMaps.active)   gulpTs.pipe(sourcemaps.init());
+        .pipe(sourcemaps.init())
     // 2.1 pass that file through typescript compiler
-        gulpTs.pipe(typescript(options.typescript.options));
+        .pipe(typescript(gulpOptions.typescript.options))
     // 2.1.1 pass that file through babel compiler
-        if(options.babel.active)    gulpTs.pipe(babel(options.babel));
+        .pipe(babel(gulpOptions.babel))
     // 2.2 concat files with custom name
-        if(options.concat.active)   gulpTs.pipe(concat(options.typescript.concat));
+        .pipe(concat(gulpOptions.typescript.concat))
     // 2.2.1 minify
-        if(options.uglify.active)   gulpTs.pipe(uglify());
+        .pipe(uglify())
     // 2.3 write sourcemaps file
-        if(options.sourceMaps.active)   gulpTs.pipe(sourcemaps.write());
+        .pipe(sourcemaps.write())
     // 2.4 add random hash to filename
-        if(options.rev.active)  gulpTs.pipe(rev());
+        .pipe(rev())
     // 3. where do i save the compiled JS ?
-        gulpTs.pipe(gulp.dest(options.typescript.dest));
+        .pipe(gulp.dest(gulpOptions.typescript.dest))
     // 4. stream changes to all browser
-        if(options.browserSync.active)  gulpTs.pipe(browserSync.stream());
-    }
+        .pipe(browserSync.stream())
 
         done();
 };
 
 // delete all build files
 function _clearBuildFiles(done) {
-
-    if(options.del.active) {
-        // we need to delete all sub build folders
-        // and keep build folder, if not we have an error
-        del([`${settings.pathBuild}/**`, `!${settings.pathBuild}`]);
-    }
-
+    // we need to delete all sub build folders
+    // and keep build folder, if not we have an error
+    del([`${gulpSettings.pathBuild}/**`, `!${gulpSettings.pathBuild}`]);
     done();
 }
 
 // gulp watcher
 function _watch(done) {
 
-    if(options.browserSync.active) {
+    if(gulpOptions.browserSync.active) {
 
         // if browserSync is activated
         browserSync.init({
             server: {
-                baseDir: options.browserSync.baseDir
+                baseDir: gulpOptions.browserSync.baseDir
             }
         });
 
         // listening specific files directory
-        gulp.watch(options.browserSync.watch).on('change', browserSync.reload);
+        gulp.watch(gulpOptions.browserSync.watch).on('change', browserSync.reload);
     }
 
-    // listening all css files
-    if(options.css.active)  gulp.watch(options.css.src, _css);
     // listening all scss files
-    if(options.sass.active)  gulp.watch(options.sass.src, _scss);
+    gulp.watch(gulpOptions.sass.src, _scss);
     // listening all js files
-    if(options.javascript.active)  gulp.watch(options.javascript.src, _js);
-    // listening all ts files
-    if(options.typescript.active)  gulp.watch(options.typescript.src, _ts);
+    gulp.watch(gulpOptions.javascript.src, _js);
 
     done();
 };
