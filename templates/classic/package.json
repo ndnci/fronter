@@ -1,31 +1,44 @@
 {
-  "name": "classic",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "NDNCI",
-  "license": "MIT",
-  "devDependencies": {
-    "@babel/core": "^7.10.2",
-    "@babel/preset-env": "^7.10.2",
-    "browser-sync": "^2.26.7",
-    "del": "^5.1.0",
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^7.0.1",
-    "gulp-babel": "^8.0.0",
-    "gulp-clean-css": "^4.3.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-rev": "^9.0.0",
-    "gulp-sass": "^4.1.0",
-    "gulp-sourcemaps": "^2.6.5",
-    "gulp-typescript": "^6.0.0-alpha.1",
-    "gulp-uglify": "^3.0.2",
-    "typescript": "^3.9.5"
-  },
-  "browserslist": [
-    "last 10 versions"
-  ]
+    "name": "classic",
+    "version": "1.1.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "NDNCI",
+    "license": "MIT",
+    "devDependencies": {
+        "@babel/core": "^7.18.3",
+        "@babel/preset-env": "^7.18.10",
+        "babelify": "^10.0.0",
+        "browser-sync": "^2.27.5",
+        "browserify": "^17.0.0",
+        "browserify-css": "^0.15.0",
+        "del": "^6.1.1",
+        "event-stream": "^4.0.1",
+        "glob": "^7.1.7",
+        "gulp": "^4.0.2",
+        "gulp-autoprefixer": "^7.0.1",
+        "gulp-babel": "^8.0.0",
+        "gulp-clean-css": "^4.3.0",
+        "gulp-concat": "^2.6.1",
+        "gulp-imagemin": "7.0.0",
+        "gulp-rev": "^9.0.0",
+        "gulp-sass": "^5.1.0",
+        "gulp-sourcemaps": "^2.6.5",
+        "gulp-typescript": "^6.0.0-alpha.1",
+        "gulp-uglify": "^3.0.2",
+        "gulp-uglify-es": "^3.0.0",
+        "sass": "^1.54.5",
+        "typescript": "^3.9.10",
+        "vinyl-buffer": "^1.0.1",
+        "vinyl-source-stream": "^2.0.0"
+    },
+    "browserslist": [
+        "last 10 versions"
+    ],
+    "dependencies": {
+        "@ndnci/mentorjs": "^2.0.0"
+    }
 }

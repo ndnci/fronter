@@ -1,58 +1,76 @@
 // SETTINGS
 const gulpSettings = {
-    pathDev: './assets',
-    pathBuild: './build'
-}
+    pathDev: "./assets",
+    pathVendor: "./vendor",
+    pathBuild: "./build",
+};
 
 // OPTIONS
 const gulpOptions = {
     // CSS
     css: {
         active: true,
-        src: gulpSettings.pathDev + '/css/**/*.css',
-        concat: 'index.css',
-        dest: gulpSettings.pathBuild + '/css'
+        src: gulpSettings.pathDev + "/css/**/*.css",
+        concat: "index.css",
+        dest: gulpSettings.pathBuild + "/css",
     },
     // SASS
     sass: {
         active: true,
-        src: gulpSettings.pathDev + '/scss/**/*.scss',
-        concat: 'index.css',
-        dest: gulpSettings.pathBuild + '/scss'
+        src: gulpSettings.pathDev + "/scss/**/*.scss",
+        concat: "index.css",
+        dest: gulpSettings.pathBuild + "/css",
     },
     // JAVASCRIPT
     javascript: {
         active: true,
-        src: gulpSettings.pathDev + '/js/**/*.js',
-        concat: 'index.js',
-        dest: gulpSettings.pathBuild + '/js'
+        src: gulpSettings.pathDev + "/js/**/*.js",
+        concat: "index.js",
+        dest: gulpSettings.pathBuild + "/js",
     },
     // TYPESCRIPT
     typescript: {
         active: true,
-        src: gulpSettings.pathDev + '/ts/**/*.ts',
-        concat: 'index.js',
-        dest: gulpSettings.pathBuild + '/ts',
+        src: gulpSettings.pathDev + "/ts/**/*.ts",
+        concat: "index.js",
+        dest: gulpSettings.pathBuild + "/js",
         options: {
-        // typescript options here
-        }
+            // typescript options here
+        },
+    },
+    img: {
+        src: gulpSettings.pathDev + "/img/**/*",
+        dest: gulpSettings.pathBuild + "/img",
     },
     // AUTOPREFIXER
     autoprefixer: {
-        active: true,
-        overrideBrowserslist: ['last 10 versions']
+        overrideBrowserslist: ["last 10 versions"],
     },
     // BABEL
     babel: {
-        active: true,
-        presets: ['@babel/env']
+        presets: ["@babel/env"],
+        ignore: ["node_modules", "vendor", "build"],
     },
     // BROWSER SYNC
     browserSync: {
         active: false,
-        baseDir: './',
-        watch: './**/*.html'
-    }
-}
+        baseDir: "./",
+        watch: "./**/*.html",
+    },
 
-module.exports = { gulpOptions, gulpSettings }
+    browserify: {
+        src: gulpSettings.pathVendor + "/**/!(*.min)*.js",
+    },
+};
+
+// PROCESS
+const gulpProcess = {
+    export: [
+        {
+            src: "./node_modules/mentorjs/build/*.js",
+            dest: gulpSettings.pathBuild + "/vendor/mentorjs",
+        },
+    ],
+};
+
+module.exports = { gulpOptions, gulpSettings, gulpProcess };
